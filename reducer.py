@@ -20,6 +20,5 @@ for line in sys.stdin:
             print ('%s\t%s' % (current_word, current_count))
         current_count = count
         current_word = word
-        
 if current_word == word:
     print ('%s\t%s' % (current_word,current_count))
