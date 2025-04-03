@@ -7,7 +7,6 @@ pipeline {
         CLUSTER = 'project-hadoop'
         SERVICE_ACCOUNT_KEY = '/path/to/service-account.json'
         scannerHome = tool 'sonarqube'
-        PATH = "/path/to/google-cloud-sdk/bin:${env.PATH}"
     }
     
     stages {
@@ -45,23 +44,25 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
-                    sh '''
-                        gcloud auth activate-service-account --key-file=$GOOGLE_KEY
-                        gcloud config set project ${PROJECT_ID}
-                        gcloud config set compute/region ${REGION}
-                        
-                        // Upload mapper.py and reducer.py to GCS
-                        gsutil cp mapper.py gs://${BUCKET}/mapper.py
-                        gsutil cp reducer.py gs://${BUCKET}/reducer.py
+                withEnv(['GCLOUD_PATH=/var/jenkins_home/google-cloud-sdk/bin']) {
+                    withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
+                        sh '''
+                            $GCLOUD_PATH/gcloud auth activate-service-account --key-file=$GOOGLE_KEY
+                            $GCLOUD_PATH/gcloud config set project ${PROJECT_ID}
+                            $GCLOUD_PATH/gcloud config set compute/region ${REGION}
+                            
+                            // Upload mapper.py and reducer.py to GCS
+                            gsutil cp mapper.py gs://${BUCKET}/mapper.py
+                            gsutil cp reducer.py gs://${BUCKET}/reducer.py
 
-                        // Submit the Hadoop job
-                        gcloud dataproc jobs submit hadoop \
-                            --cluster=${CLUSTER} \
-                            --region=${REGION} \
-                            --files=gs://${BUCKET}/mapper.py, gs://${BUCKET}/reducer.py \
-                            -- -mapper "python mapper.py" -reducer "python reducer.py" -input /data/*/ -output /HadoopOutput
-                    '''
+                            // Submit the Hadoop job
+                            $GCLOUD_PATH/gcloud dataproc jobs submit hadoop \
+                                --cluster=${CLUSTER} \
+                                --region=${REGION} \
+                                --files=gs://${BUCKET}/mapper.py, gs://${BUCKET}/reducer.py \
+                                -- -mapper "python mapper.py" -reducer "python reducer.py" -input /data/*/ -output /HadoopOutput
+                        '''
+                    }
                 }
             }
         }
