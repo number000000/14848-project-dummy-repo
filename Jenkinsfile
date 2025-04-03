@@ -64,9 +64,8 @@ pipeline {
 
                         gcloud dataproc jobs submit hadoop \
                             --cluster=${CLUSTER} \
-                            --region=${REGION} \
-                            --class=org.apache.hadoop.streaming.HadoopStreaming \     
-                            --jars=file:///usr/lib/hadoop/hadoop-streaming-3.3.6.jar \
+                            --region=${REGION} \   
+                            --jar=file:///usr/lib/hadoop/hadoop-streaming-3.3.6.jar \
                             -- -files=gs://${BUCKET}/mapper.py,gs://${BUCKET}/reducer.py \
                             -- -mapper "python mapper.py" -reducer "python reducer.py" -input /data/*/ -output /HadoopOutput
                     '''
