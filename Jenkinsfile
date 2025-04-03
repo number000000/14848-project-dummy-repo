@@ -41,6 +41,7 @@ pipeline {
                 expression {
                     return true
                 }
+            }
             steps {
                 withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
                     sh '''
