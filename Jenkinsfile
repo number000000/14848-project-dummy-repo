@@ -52,6 +52,13 @@ pipeline {
                         
                         ls -l
 
+                        gcloud auth list
+
+                        gcloud config get-value account
+
+
+                        gsutil ls
+
                         gsutil cp mapper.py gs://${BUCKET}
                         gsutil cp reducer.py gs://${BUCKET}
 
