@@ -7,6 +7,7 @@ pipeline {
         CLUSTER = 'project-hadoop'
         SERVICE_ACCOUNT_KEY = '/path/to/service-account.json'
         scannerHome = tool 'sonarqube'
+        PATH = "/path/to/google-cloud-sdk/bin:${env.PATH}"
     }
     
     stages {
