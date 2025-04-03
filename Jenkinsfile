@@ -47,8 +47,8 @@ pipeline {
                 withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
                     sh '''
                         #!/bin/bash 
-                        sudo apt-get update
-                        sudo apt-get install python3.6
+                        apt-get update
+                        apt-get install python3.6
 
                         echo "deploy stage";
                         curl -o /tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-225.0.0-linux-x86_64.tar.gz;
