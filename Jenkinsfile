@@ -44,11 +44,11 @@ pipeline {
                 }
             }
             steps {
-                withEnv(['GCLOUD_PATH=google-cloud-sdk/bin']) {
+                withEnv(['GCLOUD_PATH=/var/jenkins_home/google-cloud-sdk/bin']) {
                     withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
                         sh '''
-                            ls
-                            
+                            ls /var/jenkins_home
+
                             $GCLOUD_PATH/gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                             $GCLOUD_PATH/gcloud config set project ${PROJECT_ID}
                             $GCLOUD_PATH/gcloud config set compute/region ${REGION}
