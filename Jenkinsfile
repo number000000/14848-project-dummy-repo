@@ -50,6 +50,9 @@ pipeline {
                         gcloud config set project ${PROJECT_ID}
                         gcloud config set compute/region ${REGION}
                         
+                        chmod +wx mapper.sh
+                        chmod +wx reducer.sh
+
                         ls -l
 
                         gcloud auth list
