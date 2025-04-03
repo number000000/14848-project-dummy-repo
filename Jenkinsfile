@@ -50,11 +50,9 @@ pipeline {
                         gcloud config set project ${PROJECT_ID}
                         gcloud config set compute/region ${REGION}
                         
-                        // Upload mapper.py and reducer.py to GCS
                         gsutil cp mapper.py gs://${BUCKET}/mapper.py
                         gsutil cp reducer.py gs://${BUCKET}/reducer.py
 
-                        // Submit the Hadoop job
                         gcloud dataproc jobs submit hadoop \
                             --cluster=${CLUSTER} \
                             --region=${REGION} \
