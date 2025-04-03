@@ -65,7 +65,7 @@ pipeline {
                         gcloud dataproc jobs submit hadoop \
                             --cluster=${CLUSTER} \
                             --region=${REGION} \
-                            --files=gs://${BUCKET}/mapper.py, gs://${BUCKET}/reducer.py \
+                            -- -files=gs://${BUCKET}/mapper.py,gs://${BUCKET}/reducer.py \
                             -- -mapper "python mapper.py" -reducer "python reducer.py" -input /data/*/ -output /HadoopOutput
                     '''
                 }
