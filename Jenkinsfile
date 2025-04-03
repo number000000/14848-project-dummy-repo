@@ -23,7 +23,6 @@ pipeline {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=14848project \
                             -Dsonar.projectName=14848project \
-                            -Dsonar.projectVersion=1.0 \
                             -Dsonar.sources=."
                     }
                 }
@@ -31,8 +30,10 @@ pipeline {
         }
         stage('Quality Gate Check') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                withSonarQubeEnv('sonarqube') {
+                    timeout(time: 5, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
                 }
             }
         }

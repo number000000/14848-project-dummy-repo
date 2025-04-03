@@ -10,3 +10,4 @@ for line in sys.stdin:
         print('%s\t%s' % (word,1)) #Emit the word
 #test piepline 
 #test piepline 
+#test piepline 
