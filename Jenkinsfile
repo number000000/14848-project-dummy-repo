@@ -50,8 +50,8 @@ pipeline {
                         gcloud config set project ${PROJECT_ID}
                         gcloud config set compute/region ${REGION}
                         
-                        chmod +wx mapper.sh
-                        chmod +wx reducer.sh
+                        chmod +wx mapper.py
+                        chmod +wx reducer.py
 
                         ls -l
 
