@@ -46,16 +46,6 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'google_auth', variable: 'GOOGLE_KEY')]) {
                     sh '''
-                        #!/bin/bash 
-                        apt-get install python3.8
-
-                        echo "deploy stage";
-                        curl -o /tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-225.0.0-linux-x86_64.tar.gz;
-                        tar -xvf /tmp/google-cloud-sdk.tar.gz -C /tmp/;
-                        /tmp/google-cloud-sdk/install.sh -q;
-
-                        source /tmp/google-cloud-sdk/path.bash.inc;
-
                         gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                         gcloud config set project ${PROJECT_ID}
                         gcloud config set compute/region ${REGION}
