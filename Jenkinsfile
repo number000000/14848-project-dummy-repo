@@ -50,6 +50,8 @@ pipeline {
                         gcloud config set project ${PROJECT_ID}
                         gcloud config set compute/region ${REGION}
                         
+                        ls -l
+
                         gsutil cp mapper.py gs://${BUCKET}
                         gsutil cp reducer.py gs://${BUCKET}
 
