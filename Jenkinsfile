@@ -62,9 +62,6 @@ pipeline {
 
                         gsutil ls
 
-                        gsutil cp mapper.py gs://${BUCKET}/
-                        gsutil cp reducer.py gs://${BUCKET}/
-
                         gcloud dataproc jobs submit hadoop \
                             --cluster=${CLUSTER} \
                             --region=${REGION} \
