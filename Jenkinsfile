@@ -61,6 +61,11 @@ pipeline {
 
                         gsutil ls
 
+                        rm -rf ~/.gsutil
+
+                        gsutil cp mapper.py gs://${BUCKET}/
+                        gsutil cp reducer.py gs://${BUCKET}/
+
                         gcloud dataproc jobs submit hadoop --cluster=${CLUSTER} --region=${REGION} --jar=file://usr/lib/hadoop/hadoop-streaming.jar -- -files=gs://${BUCKET}/mapper.py,gs://${BUCKET}/reducer.py -- -mapper "python mapper.py" -reducer "python reducer.py" -input /data/*/ -output /HadoopOutput
                     '''
                 }
